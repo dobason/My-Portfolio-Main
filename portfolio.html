@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đỗ Bá Sơn — Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0f0d;
+    --panel:#161816;
+    --panel-line:#262822;
+    --cream:#f3f2ea;
+    --lime:#b6ff3c;
+    --lime-dim:#8fd42b;
+    --ink:#101210;
+    --muted:#9a9d97;
+    --muted-2:#6b6e64;
+    --text:#f3f2ea;
+    --fixed-muted:#9a9d97;
+    --fixed-line:#2a2c28;
+    --chip-bg:#0d0f0d;
+    --chip-text:#9a9d97;
+    --accent-text:#b6ff3c;
+    --shadow-hover:rgba(0,0,0,0.22);
+    --radius-xl:36px;
+    --radius-lg:24px;
+    --radius-md:16px;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Plus Jakarta Sans', sans-serif;
+    color-scheme: dark;
+  }
+  html[data-theme="light"]{
+    --bg:#f4f2ea;
+    --panel:#fdfcf7;
+    --panel-line:#e8e5d8;
+    --muted:#6f7266;
+    --muted-2:#83857a;
+    --text:#2b2c24;
+    --ink:#201f1a;
+    --chip-bg:#e6e3d4;
+    --chip-text:#3c3d33;
+    --accent-text:#4f7d17;
+    --shadow-hover:rgba(32,31,26,0.14);
+    color-scheme: light;
+  }
+  html[data-theme="light"] .hero,
+  html[data-theme="light"] .contact{
+    box-shadow:0 20px 50px rgba(32,31,26,0.06);
+  }
+  html[data-theme="light"] .repo-card,
+  html[data-theme="light"] .tl-content,
+  html[data-theme="light"] .stats,
+  html[data-theme="light"] .services-panel,
+  html[data-theme="light"] .skills-panel,
+  html[data-theme="light"] .testi-wrap{
+    box-shadow:0 8px 24px rgba(32,31,26,0.04);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg); color:var(--text); font-family:var(--font-body); line-height:1.55; overflow-x:hidden; transition:background .35s ease, color .35s ease;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1200px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3{font-family:var(--font-display); font-weight:700; letter-spacing:-0.02em;}
+
+  /* ===== NAV ===== */
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:20px 30px; max-width:1200px; margin:20px auto 0; background:var(--panel); border-radius:100px;}
+  .nav .links{display:flex; gap:32px; font-size:14px; font-weight:500; color:var(--muted);}
+  .nav .links a{position:relative; padding-bottom:2px; transition:color .25s ease;}
+  .nav .links a::after{content:''; position:absolute; left:0; bottom:-2px; width:0; height:1.5px; background:var(--lime); transition:width .25s ease;}
+  .nav .links a:hover::after{width:100%;}
+  .nav .links a:hover{color:var(--text);}
+  .nav-cta{background:var(--lime); color:var(--ink); font-weight:700; font-size:13px; padding:10px 20px; border-radius:100px; transition:transform .25s ease, box-shadow .25s ease;}
+  .nav-cta:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(182,255,60,0.35);}
+  .nav-actions{display:flex; align-items:center; gap:14px;}
+  .theme-toggle{
+    width:38px; height:38px; border-radius:50%; border:1px solid var(--panel-line);
+    background:var(--bg); color:var(--text); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; flex-shrink:0; transition:background .25s ease, transform .25s ease, border-color .25s ease;
+  }
+  .theme-toggle:hover{transform:scale(1.08) rotate(-8deg);}
+  .theme-toggle svg{width:17px; height:17px;}
+  .theme-toggle .icon-moon{display:none;}
+  html[data-theme="light"] .theme-toggle .icon-sun{display:none;}
+  html[data-theme="light"] .theme-toggle .icon-moon{display:block;}
+  .logo{display:flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:700; font-size:17px;}
+  .logo .dot{width:10px;height:10px;background:var(--lime); border-radius:3px; transform:rotate(45deg); flex-shrink:0;}
+  .nav-toggle{display:none; background:none; border:none; color:var(--text); font-size:22px; cursor:pointer;}
+
+  /* ===== HERO ===== */
+  .hero{background:var(--cream); color:var(--ink); border-radius:var(--radius-xl); max-width:1200px; margin:24px auto 0; padding:64px 60px; display:grid; grid-template-columns:1.2fr 0.8fr; gap:40px; align-items:center;}
+  .hero-copy{max-width:520px;}
+  .spark{width:32px; height:32px; margin-bottom:20px;}
+  .hero-kicker{font-size:14px; color:#6b6e64; margin-bottom:14px; font-weight:500;}
+  .hero-kicker strong{color:var(--ink); font-weight:700;}
+  .hero h1{font-size:48px; line-height:1.1;}
+  .hero h1 .accent{color:var(--lime-dim);}
+  .hero-sub{margin-top:18px; font-size:15px; color:#5c5f57; max-width:420px;}
+  .hero-buttons{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .badge-row{display:flex; align-items:center; gap:16px; margin-top:28px; flex-wrap:wrap;}
+  .badge{display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; background:#fff; border-radius:100px; padding:10px 16px; box-shadow:0 4px 14px rgba(0,0,0,0.06);}
+  .badge .stars{color:var(--lime-dim); letter-spacing:2px;}
+  .btn{font-family:var(--font-body); font-weight:600; font-size:14px; padding:15px 26px; border-radius:100px; border:none; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease; display:inline-flex; align-items:center; gap:8px;}
+  .btn:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,0.18);}
+  .btn-primary:hover{box-shadow:0 10px 24px rgba(182,255,60,0.35);}
+  .btn-primary{background:var(--lime); color:var(--ink);}
+  .btn-dark{background:var(--ink); color:var(--cream);}
+  .btn-outline{background:transparent; color:var(--ink); border:1.5px solid #cfcdbf;}
+  .btn-outline-light{background:transparent; color:var(--text); border:1.5px solid var(--panel-line);}
+
+  .hero-figure{display:flex; justify-content:center;}
+  .avatar-card{position:relative; width:100%; max-width:280px;}
+  .avatar-ring{width:100%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 35% 30%, #eceae0, #ded9c8); overflow:hidden;}
+  .avatar-svg{width:100%; height:100%;}
+  .avatar-tag{position:absolute; bottom:6px; right:0; background:var(--ink); color:var(--lime); font-family:var(--font-display); font-size:12px; font-weight:700; padding:10px 16px; border-radius:100px; display:flex; align-items:center; gap:6px; box-shadow:0 6px 18px rgba(0,0,0,0.25);}
+
+  /* ===== STATS ===== */
+  .stats{max-width:1200px; margin:20px auto 0; background:var(--panel); border-radius:var(--radius-lg); padding:34px 20px; display:grid; grid-template-columns:repeat(4,1fr); gap:20px; text-align:center;}
+  .stats .stat + .stat{border-left:1px solid var(--panel-line);}
+  .stats .num{font-family:var(--font-display); font-size:32px; color:var(--accent-text); font-weight:700;}
+  .stats .lbl{font-size:12.5px; color:var(--muted); margin-top:4px;}
+
+  /* ===== SECTION HEADER ===== */
+  .section{max-width:1200px; margin:88px auto; padding:0 24px;}
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; gap:30px; margin-bottom:44px; flex-wrap:wrap;}
+  .eyebrow{display:inline-block; background:var(--lime); color:var(--ink); font-size:12px; font-weight:700; padding:6px 14px; border-radius:100px; margin-bottom:16px; text-transform:uppercase; letter-spacing:.04em;}
+  .section h2{font-size:32px; max-width:480px;}
+  .section h2 .hl{background:var(--lime); color:var(--ink); padding:2px 10px; border-radius:8px;}
+  .section-desc{color:var(--muted); font-size:14.5px; max-width:340px;}
+
+  /* ===== TECH STACK ===== */
+  .skills-panel{background:var(--panel); border-radius:var(--radius-xl); padding:44px; display:grid; grid-template-columns:1fr 1fr; gap:32px 48px;}
+  .skill-group-head{display:flex; align-items:center; gap:10px; margin-bottom:16px;}
+  .skill-dot{width:8px; height:8px; border-radius:2px; background:var(--lime); transform:rotate(45deg); flex-shrink:0;}
+  .skill-group-head h4{font-family:var(--font-display); font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text);}
+  .skill-tags{display:flex; flex-wrap:wrap; gap:10px;}
+  .skill-tag{background:var(--chip-bg); color:var(--chip-text); font-size:13px; font-weight:600; padding:9px 16px; border-radius:100px; border:1px solid var(--panel-line); transition:background .25s ease, color .25s ease, border-color .25s ease, transform .2s ease;}
+  .skill-tag:hover{background:var(--lime); color:var(--ink); border-color:var(--lime); transform:translateY(-2px);}
+
+  /* ===== EXPERIENCE (timeline) ===== */
+  .timeline{display:flex; flex-direction:column;}
+  .tl-item{display:grid; grid-template-columns:160px 24px 1fr; gap:0; padding-bottom:44px; position:relative;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-date{font-family:var(--font-display); font-size:13px; color:var(--muted); padding-top:4px;}
+  .tl-line{display:flex; flex-direction:column; align-items:center;}
+  .tl-dot{width:12px; height:12px; border-radius:50%; background:var(--lime); margin-top:6px; flex-shrink:0;}
+  .tl-item:not(:last-child) .tl-line::after{content:''; flex:1; width:1.5px; background:var(--panel-line); margin-top:6px;}
+  .tl-content{background:var(--panel); border-radius:var(--radius-md); padding:26px 28px; transition:transform .3s ease, box-shadow .3s ease;}
+  .tl-content:hover{transform:translateY(-3px); box-shadow:0 16px 32px var(--shadow-hover);}
+  .tl-content .role-row{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; flex:1;}
+  .tl-head{display:flex; align-items:center; gap:14px; margin-bottom:2px;}
+  .tl-logo{
+    width:46px; height:46px; border-radius:12px; background:var(--ink); color:var(--lime);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    font-family:var(--font-display); font-weight:700; font-size:14px; letter-spacing:.02em;
+  }
+  .tl-content h3{font-size:19px;}
+  .tl-content .company{color:var(--accent-text); font-weight:600; font-size:13.5px;}
+  .tl-content p.desc{color:var(--muted); font-size:14px; margin-top:12px; max-width:940px;}
+  .tl-tags{display:flex; gap:8px; margin-top:16px; flex-wrap:wrap;}
+  .tl-tags span{font-size:11.5px; background:var(--chip-bg); color:var(--chip-text); padding:5px 12px; border-radius:100px; border:1px solid var(--panel-line);}
+
+  /* ===== WHAT I DO ===== */
+  .services-panel{background:var(--panel); border-radius:var(--radius-xl); padding:48px 44px; display:grid; grid-template-columns:1fr 1fr; gap:48px;}
+  .services-intro p{color:var(--muted); font-size:14.5px; margin-top:14px; max-width:340px;}
+  .accordion-item{border-bottom:1px solid var(--panel-line); padding:18px 4px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; transition:background .25s ease, padding-left .25s ease, color .25s ease;}
+  .accordion-item:first-child{border-top:1px solid var(--panel-line);}
+  .accordion-item:hover{color:var(--accent-text); padding-left:12px; background:rgba(182,255,60,0.06);}
+  .accordion-item .num{color:var(--accent-text); font-weight:700; margin-right:14px; font-family:var(--font-display);}
+  .accordion-item span.title{font-weight:600; font-size:15px;}
+  .accordion-item .arrow{color:var(--muted); transition:transform .25s ease;}
+  .accordion-item:hover .arrow{transform:translateX(4px); color:var(--accent-text);}
+  .service-visual{display:flex; flex-direction:column; gap:16px; justify-content:center;}
+  .code-chip{background:var(--chip-bg); border-radius:10px; padding:16px; font-family:'Space Grotesk',monospace; font-size:12px; color:var(--chip-text); border:1px solid var(--panel-line);}
+  .cta-mini{background:var(--lime); border-radius:16px; padding:20px;}
+  .cta-mini p{font-weight:700; font-size:15px; margin-bottom:12px; color:var(--ink);}
+  .cta-mini .go{display:flex; align-items:center; justify-content:space-between; font-size:13px; font-weight:600; color:var(--ink);}
+  .cta-mini .circle{background:var(--ink); color:var(--lime); border-radius:50%; width:26px; height:26px; display:flex; align-items:center; justify-content:center;}
+
+  /* ===== TAGLINE ===== */
+  .tagline-wrap{display:flex; align-items:center; gap:20px; max-width:1200px; margin:0 auto; padding:40px 24px;}
+  .tagline-rule{height:1px; background:var(--panel-line); flex:1;}
+  .tagline{font-family:var(--font-display); font-weight:700; font-size:clamp(24px,4vw,42px); display:flex; align-items:center; gap:16px; white-space:nowrap;}
+  .tagline .plus{color:var(--accent-text);}
+
+  /* ===== PROJECTS / REPOS ===== */
+  .repo-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .repo-card{background:var(--panel); border-radius:var(--radius-md); padding:24px; display:flex; flex-direction:column; gap:14px; border:1px solid var(--panel-line); transition:border-color .3s ease, transform .3s ease, box-shadow .3s ease;}
+  .repo-card:hover{border-color:var(--accent-text); transform:translateY(-4px); box-shadow:0 16px 32px var(--shadow-hover);}
+  .repo-head{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+  .repo-name{font-family:var(--font-display); font-size:16px; font-weight:700; display:flex; align-items:center; gap:8px;}
+  .repo-name .repo-icon{color:var(--accent-text);}
+  .repo-visibility{font-size:10.5px; color:var(--muted); border:1px solid var(--panel-line); padding:3px 9px; border-radius:100px;}
+  .repo-desc{font-size:13.5px; color:var(--muted); flex:1;}
+  .repo-tags{display:flex; gap:8px; flex-wrap:wrap;}
+  .repo-tags span{font-size:11px; background:var(--chip-bg); color:var(--accent-text); padding:4px 10px; border-radius:100px;}
+  .repo-meta{display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted-2); padding-top:10px; border-top:1px solid var(--panel-line);}
+  .repo-meta .lang-dot{display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--lime); margin-right:6px;}
+  .repo-meta a{font-weight:600; color:var(--text); transition:color .2s ease;}
+  .repo-meta a:hover{color:var(--accent-text);}
+
+  /* ===== TESTIMONIALS ===== */
+  .testi-wrap{background:var(--panel); border-radius:var(--radius-lg); padding:34px 30px; display:flex; gap:24px; align-items:center; flex-wrap:wrap;}
+  .testi-avatar{width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,#3a3c37,#1c1e1a); flex-shrink:0; display:flex;align-items:center;justify-content:center; font-family:var(--font-display); font-weight:700; color:var(--lime);}
+  .testi-text{flex:1; min-width:220px;}
+  .testi-text p{font-size:14.5px; color:var(--text);}
+  .testi-text .who{margin-top:10px; font-size:12.5px; color:var(--muted);}
+  .testi-nav{display:flex; gap:8px;}
+  .testi-nav button{width:34px;height:34px; border-radius:50%; border:1px solid var(--panel-line); background:none; color:var(--text); cursor:pointer; transition:background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;}
+  .testi-nav button:hover{background:var(--lime); color:var(--ink); border-color:var(--lime); transform:scale(1.08);}
+
+  /* ===== TAG CLOUD ===== */
+  /* ===== CONTACT ===== */
+  .contact{background:var(--cream); color:var(--ink); border-radius:var(--radius-xl); padding:56px; display:grid; grid-template-columns:1.1fr 0.9fr; gap:50px; align-items:center;}
+  .contact-copy h2{font-size:32px; max-width:400px; margin-top:16px;}
+  .contact-copy p{color:#5c5f57; font-size:14px; margin:14px 0 26px; max-width:380px;}
+  .contact-form{display:flex; gap:10px; flex-wrap:wrap;}
+  .contact-form input{padding:14px 18px; border-radius:100px; border:1.5px solid #ddd9c8; font-family:var(--font-body); font-size:14px; min-width:220px; background:#fff; transition:border-color .2s ease, box-shadow .2s ease;}
+  .contact-form input:focus{outline:none; border-color:var(--lime-dim); box-shadow:0 0 0 4px rgba(182,255,60,0.25);}
+
+  .contact-card{background:var(--ink); border-radius:var(--radius-lg); padding:30px; color:var(--cream); transition:transform .3s ease, box-shadow .3s ease;}
+  .contact-card:hover{transform:translateY(-4px); box-shadow:0 20px 40px rgba(0,0,0,0.25);}
+  .cc-top{display:flex; align-items:center; gap:14px;}
+  .cc-avatar{width:48px; height:48px; border-radius:50%; background:var(--lime); color:var(--ink); font-family:var(--font-display); font-weight:700; font-size:15px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .cc-top h4{font-family:var(--font-display); font-size:16px; color:var(--cream);}
+  .cc-role{font-size:12px; color:var(--fixed-muted);}
+  .cc-status{margin-left:auto; display:flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; color:var(--lime); background:rgba(182,255,60,0.1); padding:6px 12px; border-radius:100px; white-space:nowrap;}
+  .cc-status i{width:6px; height:6px; border-radius:50%; background:var(--lime); display:inline-block; animation:pulse-dot 1.8s ease-in-out infinite;}
+  @keyframes pulse-dot{0%,100%{opacity:1; transform:scale(1);} 50%{opacity:.4; transform:scale(0.7);}}
+  .cc-divider{height:1px; background:var(--fixed-line); margin:22px 0;}
+  .cc-list{display:flex; flex-direction:column; gap:18px;}
+  .cc-row{display:flex; align-items:center; gap:14px;}
+  .cc-icon{width:36px; height:36px; border-radius:10px; background:#1c1e1a; color:var(--lime); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .2s ease, transform .2s ease;}
+  .cc-row:hover .cc-icon{background:var(--lime); color:var(--ink); transform:scale(1.06);}
+  .cc-row div{display:flex; flex-direction:column; gap:2px;}
+  .cc-label{font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--fixed-muted);}
+  .cc-value{font-size:14px; font-weight:600; color:var(--cream);}
+
+  /* ===== FOOTER ===== */
+  footer{
+    position:relative; overflow:hidden;
+    background:
+      radial-gradient(circle at 8px 8px, rgba(16,18,16,0.07) 1.4px, transparent 1.6px) 0 0/22px 22px,
+      linear-gradient(135deg, #cbff70 0%, #b6ff3c 45%, #93e01f 100%);
+    color:var(--ink); border-radius:var(--radius-xl); max-width:1200px; margin:24px auto; padding:46px 50px;
+  }
+  footer::before{content:''; position:absolute; width:360px; height:360px; border-radius:50%; background:rgba(16,18,16,0.07); top:-160px; right:-120px; pointer-events:none;}
+  footer::after{content:''; position:absolute; width:280px; height:280px; border-radius:50%; background:rgba(255,255,255,0.4); bottom:-160px; left:-90px; pointer-events:none;}
+  .foot-cta{
+    position:relative; z-index:1;
+    background:var(--ink); color:var(--cream); border-radius:var(--radius-lg);
+    padding:32px 38px; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;
+    margin-bottom:38px; box-shadow:0 20px 40px rgba(0,0,0,0.18);
+  }
+  .foot-cta h3{font-size:22px; margin-bottom:8px;}
+  .foot-cta p{font-size:13.5px; color:var(--fixed-muted); max-width:360px;}
+  .foot-top, .foot-bottom{position:relative; z-index:1;}
+  .foot-logo .dot{width:10px; height:10px; background:var(--ink); border-radius:3px; transform:rotate(45deg); flex-shrink:0;}
+  .foot-top{display:flex; justify-content:space-between; gap:30px; flex-wrap:wrap; padding-bottom:36px; border-bottom:1.5px solid rgba(0,0,0,0.15);}
+  .foot-logo{font-family:var(--font-display); font-weight:800; font-size:26px; display:flex; align-items:center; gap:10px;}
+  .foot-cols{display:flex; gap:60px; flex-wrap:wrap;}
+  .foot-col h5{font-size:12px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:14px; opacity:.7;}
+  .foot-col a, .foot-col p{display:block; font-size:14px; margin-bottom:9px; font-weight:500;}
+  .foot-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:26px; font-size:13px; flex-wrap:wrap; gap:14px;}
+  .socials{display:flex; gap:10px;}
+  .socials a{width:34px;height:34px;border-radius:50%; background:var(--ink); color:var(--lime); display:flex; align-items:center; justify-content:center; font-size:13px; transition:transform .25s ease, box-shadow .25s ease;}
+  .socials a:hover{transform:translateY(-3px); box-shadow:0 8px 16px rgba(0,0,0,0.25);}
+  .foot-col a{transition:color .2s ease, padding-left .2s ease;}
+  .foot-col a:hover{color:var(--panel); padding-left:4px;}
+
+  /* ===== SCROLL REVEAL ===== */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+    *{scroll-behavior:auto !important;}
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 980px){
+    .hero{grid-template-columns:1fr; text-align:left;}
+    .hero-figure{order:-1; max-width:220px; margin:0 auto;}
+    .repo-grid{grid-template-columns:1fr 1fr;}
+    .services-panel{grid-template-columns:1fr;}
+    .tl-item{grid-template-columns:100px 20px 1fr;}
+  }
+  @media (max-width: 720px){
+    .nav{padding:16px 18px;}
+    .nav .links{display:none;}
+    .nav-toggle{display:block;}
+    .hero{padding:36px 22px;}
+    .hero h1{font-size:32px;}
+    .stats{grid-template-columns:1fr 1fr;}
+    .stats .stat:nth-child(3){border-left:1px solid var(--panel-line);}
+    .stats .stat:nth-child(odd){border-left:none;}
+    .repo-grid, .services-panel{grid-template-columns:1fr;}
+    .skills-panel{grid-template-columns:1fr; padding:30px 26px; gap:26px;}
+    .section h2{font-size:24px;}
+    .section{margin:60px auto;}
+    .tl-item{grid-template-columns:20px 1fr; }
+    .tl-date{grid-column:1 / -1; padding-top:0; margin-bottom:8px;}
+    .tl-line{grid-row:2;}
+    .tl-content{grid-row:2;}
+    .contact{padding:34px 24px; grid-template-columns:1fr; text-align:center;}
+    .contact-form{justify-content:center;}
+    .cc-top{text-align:left;}
+    footer{padding:28px 20px;}
+    .foot-cta{padding:26px 24px; text-align:center; justify-content:center;}
+    .foot-cta > div{width:100%;}
+    .foot-cta p{margin:0 auto;}
+    .foot-cols{gap:30px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo"><span class="dot"></span> Đỗ Bá Sơn</div>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+  </div>
+  <div class="nav-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle color theme" title="Toggle light / dark theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2.5 12H5M19 12h2.5M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+    </button>
+    <a href="#contact" class="nav-cta">Get In Touch</a>
+    <button class="nav-toggle">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="hero-copy">
+    <svg class="spark" viewBox="0 0 24 24" fill="none"><path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" fill="#8fd42b"/></svg>
+    <div class="hero-kicker">Hi, I'm <strong>Do Ba Son</strong></div>
+    <h1>Building <span class="accent">Scalable Software</span> Through Clean Code</h1>
+    <p class="hero-sub">Full-stack software engineer specializing in resilient backend systems and fast, accessible interfaces. I turn complex problems into shipped products.</p>
+    <div class="hero-buttons">
+      <a href="#projects" class="btn btn-primary">View My Work →</a>
+      <a href="#contact" class="btn btn-outline">Let's Collaborate</a>
+    </div>
+  </div>
+  <div class="hero-figure">
+    <div class="avatar-card">
+      <div class="avatar-ring">
+        <!-- <svg class="avatar-svg" viewBox="0 0 290 290" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="145" cy="115" r="46" fill="#1b1c19"/>
+          <path d="M60 290 C60 210 100 175 145 175 C190 175 230 210 230 290 Z" fill="#101210"/>
+          <rect x="118" y="90" width="54" height="16" rx="8" fill="#b6ff3c"/>
+          <path d="M100 60 Q145 20 190 60 L185 100 Q145 80 105 100 Z" fill="#0a0b0a"/>
+        </svg> -->
+        <img src="./avatar.jpg" alt="Avatar" class="avatar-svg">
+      </div>
+      <div class="avatar-tag">2 Yrs Exp</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<!-- <div class="stats reveal">
+  <div class="stat"><div class="num">20+</div><div class="lbl">Projects Shipped</div></div>
+  <div class="stat"><div class="num">2+</div><div class="lbl">Years Experience</div></div>
+  <div class="stat"><div class="num">10K+</div><div class="lbl">Commits Pushed</div></div>
+  <div class="stat"><div class="num">99.9%</div><div class="lbl">Uptime Delivered</div></div>
+</div> -->
+
+<!-- TECH STACK -->
+<section class="section" id="stack">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">Tech Stack</span>
+      <h2>Tools I <span class="hl">Rely On</span></h2>
+    </div>
+    <p class="section-desc">The languages, frameworks, and infrastructure I reach for when building production software.</p>
+  </div>
+  <div class="skills-panel reveal">
+    <div class="skill-group">
+      <div class="skill-group-head"><span class="skill-dot"></span><h4>Languages</h4></div>
+      <div class="skill-tags">
+        <span class="skill-tag">C#</span>
+        <span class="skill-tag">HTML / CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">TypeScript</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">PHP</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">SQL</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-head"><span class="skill-dot"></span><h4>Frontend</h4></div>
+      <div class="skill-tags">
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">Next.js</span>
+        <span class="skill-tag">Laravel</span>
+        <span class="skill-tag">Zend</span>
+        <span class="skill-tag">Tailwind CSS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-head"><span class="skill-dot"></span><h4>Backend</h4></div>
+      <div class="skill-tags">
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Spring boot</span>
+        <span class="skill-tag">Express</span>
+        <span class="skill-tag">FastAPI</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-head"><span class="skill-dot"></span><h4>Database & Cloud</h4></div>
+      <div class="skill-tags">
+        <span class="skill-tag">SQL Server</span>
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">MongoDB</span>
+        <span class="skill-tag">MySQL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">Career</span>
+      <h2>Where I've <span class="hl">Worked</span></h2>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item reveal" style="transition-delay:0.00s">
+      <div class="tl-date"> 04/2024 — 09/2025</div>
+      <div class="tl-line"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-head">
+          <div class="tl-logo">NT</div>
+          <div class="role-row"><h3>Software Engineer</h3><span class="company">Hathyo Company</span></div>
+        </div>
+        <p class="desc">As a Intern Software Engineering on an 8-person team, I was responsible for translating Figma designs into pixel-perfect, responsive interfaces using TypeScript and Next.js. I integrated RESTful APIs through Axios
+                        and managed complex server-state and data-fetching logic with TanStack Query, ensuring smooth and
+                        efficient communication between frontend and backend. I maintained code quality through regular GitLabbased version control, participated actively in agile sprint planning, and engaged in cross-functional
+                        collaboration with design and backend teams to deliver features on schedule</p>
+        <div class="tl-tags"><span>TypeScript</span><span>React</span><span>Next.js</span><span>PostgreSQL</span></div>
+      </div>
+    </div>
+</section>
+
+<!-- WHAT I DO -->
+<section class="section" id="skills">
+  <div class="services-panel reveal">
+    <div>
+      <div class="services-intro">
+        <span class="eyebrow">Services</span>
+        <h2 style="font-size:28px;">My <span class="hl">Craft</span></h2>
+        <p>I offer end-to-end engineering — from architecture decisions to pixel-level polish — so products ship faster without cutting corners.</p>
+      </div>
+      <div class="accordion-list" style="margin-top:24px;">
+        <div class="accordion-item"><div><span class="num">01</span><span class="title">Frontend Engineering</span></div><span class="arrow">→</span></div>
+        <div class="accordion-item"><div><span class="num">02</span><span class="title">Backend & APIs</span></div><span class="arrow">→</span></div>
+        <div class="accordion-item"><div><span class="num">03</span><span class="title">Mobile Development</span></div><span class="arrow">→</span></div>
+        <div class="accordion-item"><div><span class="num">03</span><span class="title">Fullstack Engineering</span></div><span class="arrow">→</span></div>
+      </div>
+    </div>
+    <div class="service-visual">
+      <div class="cta-mini">
+        <p>Have a project that needs an engineer?</p>
+        <div class="go">Let's talk <span class="circle">↗</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAGLINE -->
+<div class="tagline-wrap">
+  <div class="tagline-rule"></div>
+  <div class="tagline">Code <span class="plus">+</span> Test <span class="plus">+</span> Deploy</div>
+  <div class="tagline-rule"></div>
+</div>
+
+<!-- PROJECTS / REPOS -->
+<section class="section" id="projects">
+  <div class="section-head">
+    <div>
+      <span class="eyebrow">Repositories</span>
+      <h2>Featured <span class="hl">Projects</span></h2>
+    </div>
+    <a href="https://github.com" target="_blank" class="btn btn-outline-light">View GitHub Profile ↗</a>
+  </div>
+  <div class="repo-grid">
+    <div class="repo-card reveal" style="transition-delay:0.00s">
+      <div class="repo-head">
+        <div class="repo-name"><span class="repo-icon">⌥</span>ledger-api</div>
+        <span class="repo-visibility">Public</span>
+      </div>
+      <p class="repo-desc">High-throughput payments ledger with double-entry accounting, built on Node.js and PostgreSQL. Handles 200K+ transactions/month in production.</p>
+      <div class="repo-tags"><span>Node.js</span><span>PostgreSQL</span><span>Docker</span></div>
+      <div class="repo-meta"><span><span class="lang-dot"></span>TypeScript · ★ 142</span><a href="https://github.com" target="_blank">View repo ↗</a></div>
+    </div>
+    <div class="repo-card reveal" style="transition-delay:0.10s">
+      <div class="repo-head">
+        <div class="repo-name"><span class="repo-icon">⌥</span>pulse-dashboard</div>
+        <span class="repo-visibility">Public</span>
+      </div>
+      <p class="repo-desc">Real-time analytics dashboard with WebSocket data streaming, custom charting, and role-based access control for enterprise teams.</p>
+      <div class="repo-tags"><span>React</span><span>WebSockets</span><span>Redis</span></div>
+      <div class="repo-meta"><span><span class="lang-dot"></span>TypeScript · ★ 96</span><a href="https://github.com" target="_blank">View repo ↗</a></div>
+    </div>
+    <div class="repo-card reveal" style="transition-delay:0.20s">
+      <div class="repo-head">
+        <div class="repo-name"><span class="repo-icon">⌥</span>infra-toolkit</div>
+        <span class="repo-visibility">Public</span>
+      </div>
+      <p class="repo-desc">Reusable Terraform modules and GitHub Actions workflows for spinning up production-ready AWS environments in under 10 minutes.</p>
+      <div class="repo-tags"><span>AWS</span><span>Terraform</span><span>CI/CD</span></div>
+      <div class="repo-meta"><span><span class="lang-dot"></span>HCL · ★ 78</span><a href="https://github.com" target="_blank">View repo ↗</a></div>
+    </div>
+    <div class="repo-card reveal" style="transition-delay:0.00s">
+      <div class="repo-head">
+        <div class="repo-name"><span class="repo-icon">⌥</span>queue-worker</div>
+        <span class="repo-visibility">Public</span>
+      </div>
+      <p class="repo-desc">Lightweight background job processor with retry logic, dead-letter queues, and Prometheus metrics — built to replace a flaky cron setup.</p>
+      <div class="repo-tags"><span>Python</span><span>Redis</span><span>Prometheus</span></div>
+      <div class="repo-meta"><span><span class="lang-dot"></span>Python · ★ 61</span><a href="https://github.com" target="_blank">View repo ↗</a></div>
+    </div>
+    <div class="repo-card reveal" style="transition-delay:0.10s">
+      <div class="repo-head">
+        <div class="repo-name"><span class="repo-icon">⌥</span>ui-kit-lite</div>
+        <span class="repo-visibility">Public</span>
+      </div>
+      <p class="repo-desc">Accessible, headless React component library used across three internal products, with full keyboard and screen-reader support.</p>
+      <div class="repo-tags"><span>React</span><span>TypeScript</span><span>a11y</span></div>
+      <div class="repo-meta"><span><span class="lang-dot"></span>TypeScript · ★ 54</span><a href="https://github.com" target="_blank">View repo ↗</a></div>
+    </div>
+    <div class="repo-card reveal" style="transition-delay:0.20s">
+      <div class="repo-head">
+        <div class="repo-name"><span class="repo-icon">⌥</span>schema-migrate</div>
+        <span class="repo-visibility">Public</span>
+      </div>
+      <p class="repo-desc">Zero-downtime PostgreSQL migration CLI with automatic rollback plans, used to ship 400+ schema changes without an incident.</p>
+      <div class="repo-tags"><span>Python</span><span>PostgreSQL</span><span>CLI</span></div>
+      <div class="repo-meta"><span><span class="lang-dot"></span>Python · ★ 39</span><a href="https://github.com" target="_blank">View repo ↗</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="testi-wrap reveal">
+    <div class="testi-avatar">EM</div>
+    <div class="testi-text">
+      <p>"Sơn rebuilt our checkout service and cut response times in half. Communicative, precise, and genuinely cares about code quality."</p>
+      <div class="who">Elena Marsh — Engineering Manager, Nimbus Technologies</div>
+    </div>
+    <div class="testi-nav"><button>←</button><button>→</button></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="contact reveal">
+    <div class="contact-copy">
+      <span class="eyebrow" style="background:var(--ink); color:var(--lime);">Get In Touch</span>
+      <h2>Let's Build Something Great</h2>
+      <p>Have a role, a project, or just a technical question? My inbox is open — I usually reply within a day.</p>
+      <form class="contact-form" onsubmit="return false;">
+        <input type="email" placeholder="Enter your email">
+        <button class="btn btn-dark">Send Message</button>
+      </form>
+    </div>
+
+    <div class="contact-card">
+      <div class="cc-top">
+        <div class="cc-avatar">ĐS</div>
+        <div>
+          <h4>Đỗ Bá Sơn</h4>
+          <span class="cc-role">Software Engineer</span>
+        </div>
+        <span class="cc-status"><i></i>Available</span>
+      </div>
+      <div class="cc-divider"></div>
+      <div class="cc-list">
+        <div class="cc-row">
+          <span class="cc-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          <div><span class="cc-label">Phone</span><span class="cc-value">0387 520 913</span></div>
+        </div>
+        <div class="cc-row">
+          <span class="cc-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5"/></svg></span>
+          <div><span class="cc-label">Education</span><span class="cc-value">Sài Gòn University</span></div>
+        </div>
+        <div class="cc-row">
+          <span class="cc-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div><span class="cc-label">Location</span><span class="cc-value">Ho Chi Minh City, Vietnam</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-cta">
+    <div>
+      <h3>Let's create something amazing together</h3>
+      <p>Open to full-time roles, freelance projects, and technical collaborations.</p>
+    </div>
+    <a href="#contact" class="btn btn-primary">Start a Conversation →</a>
+  </div>
+
+  <div class="foot-top">
+    <div class="foot-logo"><span class="dot"></span>Đỗ Bá Sơn</div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <h5>Navigate</h5>
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+      </div>
+      <div class="foot-col">
+        <h5>Expertise</h5>
+        <a href="#">Frontend</a>
+        <a href="#">Backend</a>
+        <a href="#">Cloud & DevOps</a>
+        <a href="#">Mobile</a>
+      </div>
+      <div class="foot-col">
+        <h5>Resources</h5>
+        <a href="#">Download CV</a>
+        <a href="https://github.com" target="_blank">GitHub Profile</a>
+        <a href="#">Case Studies</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Đỗ Bá Sơn. All rights reserved.</span>
+    <div class="socials">
+      <a href="https://github.com" target="_blank">gh</a><a href="#">in</a><a href="#">tw</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleTheme(){
+    const html = document.documentElement;
+    const isLight = html.getAttribute('data-theme') === 'light';
+    html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  }
+</script>
+
+<script>
+  document.querySelector('.nav-toggle').addEventListener('click', () => {
+    const g = document.querySelector('.nav .links');
+    g.style.display = g.style.display === 'flex' ? 'none' : 'flex';
+    g.style.flexDirection = 'column';
+    g.style.gap = '14px';
+    g.style.position = 'absolute';
+    g.style.top = '70px';
+    g.style.right = '20px';
+    g.style.background = 'var(--panel)';
+    g.style.padding = '18px 24px';
+    g.style.borderRadius = '18px';
+  });
+</script>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
